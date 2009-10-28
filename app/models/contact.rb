@@ -1,3 +1,5 @@
+require 'acts_as_signed'
+
 class Contact < ActiveRecord::Base
   validates_uniqueness_of :email
   #validates_presence_of :first_name
@@ -9,26 +11,28 @@ class Contact < ActiveRecord::Base
   has_many :addresses, :dependent => :destroy
   accepts_nested_attributes_for :addresses, :reject_if => proc {|attributes| attributes['name'].blank?}
  
+  acts_as_signed
+ 
   def full_name
     "#{self.first_name} #{self.last_name}"
   end
 
-  def signed_id
-    [self.id.to_s, self.sign(contact)].join("-")
-  end
+  #def signed_id
+  #  [self.id.to_s, self.sign(contact)].join("-")
+  #end
 
   # contact.rb
-  def self.find_by_signature(secret)
-    return nil unless secret.kind_of?(String)
-    id, signature = secret.split('-')
-    contact = self.find(id)
-    raise ActiveRecord::RecordNotFound if signature != self.sign(contact.id)
-    contact
-  end
+  #def self.find_by_signature(secret)
+  #  return nil unless secret.kind_of?(String)
+  #  id, signature = secret.split('-')
+  #  contact = self.find(id)
+  #  raise ActiveRecord::RecordNotFound if signature != self.sign(contact.id)
+  #  contact
+  #end
  
-  def self.sign(id, length=8)
-    Digest::SHA1.hexdigest([self, id, SECRET].join)[0, length]
-  end  
+  #def self.sign(id, length=8)
+  #  Digest::SHA1.hexdigest([self, id, SECRET].join)[0, length]
+  #end  
   #la constante secret esta definida en config
 
 end
