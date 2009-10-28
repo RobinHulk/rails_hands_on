@@ -242,10 +242,14 @@ img {
     clear: both;
     display: block;
     text-align: left; }
-  /* line 35, ../../../app/stylesheets/screen.sass */
+    /* line 34, ../../../app/stylesheets/screen.sass */
+    #page #content fieldset {
+      padding: 1em; }
+  /* line 37, ../../../app/stylesheets/screen.sass */
   #page footer {
-    clear: both; }
-    /* line 38, ../../../app/stylesheets/screen.sass */
+    clear: both;
+    display: block; }
+    /* line 41, ../../../app/stylesheets/screen.sass */
     #page footer ul li {
       float: left;
       display: inline-block;
@@ -253,6 +257,14 @@ img {
 
 /* @end */
 /* @group COMPONENTS by type */
+/* line 51, ../../../app/stylesheets/screen.sass */
+.col6 {
+  width: 49.153%;
+  display: inline;
+  float: left;
+  margin-right: 1.695%;
+  padding-left: 16.393%; }
+
 /* @end */
 /* @group OVERRIDES by content */
 /* @end */

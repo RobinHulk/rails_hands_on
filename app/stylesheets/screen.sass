@@ -31,9 +31,12 @@
     +full(12)
     :display block
     :text-align left
+    fieldset
+      :padding 1em
 
   footer
     +full(12)
+    :display block
     ul
       li
         :float left
@@ -45,7 +48,9 @@
 
   
 /* @group COMPONENTS by type */
-
+.col6
+  +columns(6,12)
+  +prefix(2)
 
 
 /* @end */

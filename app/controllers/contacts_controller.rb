@@ -1,4 +1,10 @@
 class ContactsController < ApplicationController
+  MIN_ADDRESSES = 3
+
+  def shared
+    @contact ||= Contact.find_by_signature(params[:contact_id] || params[:id])
+    # el || quiere decir que si tiene algo no lo sobreescribe
+  end
   
   def index
     @contacts = Contact.all(:limit=>10)
@@ -6,6 +12,9 @@ class ContactsController < ApplicationController
 
   def new
     @contact = Contact.new
+    MIN_ADDRESSES.times do
+      @contact.addresses.build
+    end
   end
   
   def create
@@ -14,12 +23,16 @@ class ContactsController < ApplicationController
       flash[:notice] = "Todo genial! #{@contact.first_name} salvado"
       redirect_to contacts_path
     else
+      (MIN_ADDRESSES - @contact.addresses.length).times do
+        @contact.addresses.build
+      end
       render :action => 'new'
     end
   end
   
   def edit
     @contact = Contact.find(params[:id])
+    @contact.addresses.build
   end
 
   def update
@@ -37,7 +50,4 @@ class ContactsController < ApplicationController
     @contact.destroy
     redirect_to contacts_path
   end
-    
-    
-
 end
