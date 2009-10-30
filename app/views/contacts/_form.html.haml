@@ -1,5 +1,5 @@
 = error_messages_for :contact, :header_message => "Invalid Contact"
-
+ 
 %fieldset.col6
   %legend Personal Information
   %label First Name
@@ -10,16 +10,25 @@
   = form.text_field :email
 %fieldset.col6
   %legend Social Information
-  %label Group
-  =form.select :group_id , Group.all.collect{|i|[i.name,i.id]}
+
+%fieldset.col6
+  %Label comments
+  -form.fields_for :relationships do |relationships_form|
+    =relationships_form.text_field :note
+    .bordered
+      %label Group
+      =relationships_form.select :group_id, Group.all.collect{|i| [i.name,i.id]}
+  
   %fieldset
     -form.fields_for :addresses do |addresses_form|
       %label Type
       -if addresses_form.object.new_record?
-        =addresses_form.select :type, Address::AVAILABLE_TYPES        
-      -else
-        =addresses_form.object.type      
+        = addresses_form.select :type, Address::AVAILABLE_TYPES
+      -else  
+        = addresses_form.object.type
+      
       %label Name
-      =addresses_form.text_field :name
+      = addresses_form.text_field :name
+  
   = form.submit "save"
 

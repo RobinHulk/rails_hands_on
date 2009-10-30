@@ -4,6 +4,13 @@
   <div class="notice"><%= flash[:notice] %></div>
 <% end %>
 
+<% form_tag contacts_path, :method => :get do %>
+  <fieldset class="col6"
+  <%= text_field_tag :search, "search", :id => 'search' %>
+  <%= submit_tag 'search' %>
+  </fieldset>
+<% end %>
+
 <table border="1">
   <thead>
     <tr>
@@ -21,6 +28,7 @@
 			<td><%= h contact.first_name %></td>
 			<td><%= h contact.last_name %></td>
 			<td><%= h contact.email %></td>
+      <td></td>
 			<td><%= shared_contact_url(devolve_el_chorizo(contact)) %></td>
 			<td><%= link_to "[ Edit ]", edit_contact_path(contact) %></td>
 			<td><%= link_to "[ Delete ]", contact_path(contact), :method => "delete", :confirm => "Seguro?" %></td>

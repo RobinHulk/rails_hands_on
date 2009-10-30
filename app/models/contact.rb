@@ -7,10 +7,14 @@ class Contact < ActiveRecord::Base
   validates_presence_of :email, :message => "como no tenes email?"
   validates_format_of :email, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i
 
-  belongs_to :group
+  #belongs_to :group
+  #has_and_belongs_to_many :groups
+  has_many :relationships
+  has_many :groups, :through => :relationships 
   has_many :addresses, :dependent => :destroy
   accepts_nested_attributes_for :addresses, :reject_if => proc {|attributes| attributes['name'].blank?}
- 
+  accepts_nested_attributes_for :relationships, :reject_if => proc {|attributes| attributes['note'].blank?}
+
   acts_as_signed
  
   def full_name
